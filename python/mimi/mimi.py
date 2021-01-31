@@ -10,7 +10,13 @@ class Mimi():
     def __init__(self, config):
         self.__CONFIG = config
 
-    def access_token(self, old_data=None):
+    def check_expiration(self, json_data=None):
+        if 'endTimestamp' in json_data and json_data['endTimestamp'] > int(time.time()):
+            return True
+
+        return False
+
+    def access_token(self):
         """
         get accessToken
 
@@ -19,9 +25,6 @@ class Mimi():
         json_data : json
             response data
         """
-
-        if old_data is not None and old_data['endTimestamp'] > int(time.time()):
-            return old_data['accessToken']
 
         res = requests.post(
             url='https://auth.mimi.fd.ai/v2/token',
@@ -39,7 +42,7 @@ class Mimi():
         json_data = res.json()
 
         if json_data['status'] != 'success':
-            raise Exception(f'{sys._getframe().f_code.co_name}: error: {error}')
+            raise Exception(f'{sys._getframe().f_code.co_name}: error: {json_data["error"]}')
 
         return json_data
 

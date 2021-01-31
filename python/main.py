@@ -10,9 +10,9 @@ from mimi.mimi import Mimi
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', '--auth_config', help='path of auth config file')
-    parser.add_argument('-r', '--result_file', help='path of result file')
-    parser.add_argument('-s', '--source_file', help='path of source file')
     parser.add_argument('-m', '--mode', help='mode you want to use')
+    parser.add_argument('-s', '--source_file', help='path of source file')
+    parser.add_argument('-r', '--result_file', help='path of result file')
     args = parser.parse_args()
 
     with open(args.auth_config, "r", encoding="utf-8") as f:
